@@ -10,9 +10,12 @@ Rails.application.routes.draw do
     resources :sessions, only: [:create, :destroy]
     resources :properties, only: [:index, :show]
     resources :bookings, only: [:create]
+    resources :charges, only: [:create]
 
     get '/properties/:id/bookings' => 'bookings#get_property_bookings'
     get '/authenticated' => 'sessions#authenticated'
+
+    post 'charges/mark_complete' => 'charges#mark_complete'
 
   end
 
