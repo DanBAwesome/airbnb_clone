@@ -1,0 +1,14 @@
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.user-icon > .dropdown-toggle {
+    width: 40px;
+    height: 40px;
+}
+
+.user-icon > .dropdown-toggle::after {
+    display: none;
+}

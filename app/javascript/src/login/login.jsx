@@ -5,9 +5,13 @@ import SignupWidget from './signupWidget';
 import { safeCredentials, handleErrors } from '@utils/fetchHelper';
 
 class Login extends React.Component {
-    state = {
-        authenticated: false,
-        show_login: true
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            authenticated: false,
+            show_login: props.show_login & true
+        }
     }
 
     componentDidMount() {

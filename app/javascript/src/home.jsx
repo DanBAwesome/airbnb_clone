@@ -48,7 +48,7 @@ class Home extends React.Component {
     const { properties, next_page, loading } = this.state;
     return (
       <Layout>
-        <div className="container pt-4">
+        <div className="container py-4">
           <h4>Top-rated places to stay</h4>
           <p className="text-secondary mb-3">
             Explore some of the best places in the world
