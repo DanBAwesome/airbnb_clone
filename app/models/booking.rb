@@ -11,6 +11,16 @@ class Booking < ApplicationRecord
     before_validation :check_start_date_smaller_than_end_date
     before_validation :check_availability
 
+    def is_paid 
+        self.charges.pluck(:complete).include?(true)
+    end
+    
+    def total_price
+        property = self.property
+
+        return (self.end_date - self.start_date).to_i * property.price_per_night
+    end
+
     private
 
     def check_start_date_smaller_than_end_date
@@ -31,5 +41,6 @@ class Booking < ApplicationRecord
         end
     end
 
+    
 
 end

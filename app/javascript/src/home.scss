@@ -3,5 +3,29 @@
         padding-top: calc(2 / 3 * 100%);
         background-size: cover;
         background-position: center;
+        cursor: pointer;
+        transition: 0.4s linear;
+    }
+
+    .carousel-indicators > li {
+        width: 9px;
+        height: 9px;
+        border-radius: 100%;
+    }
+
+    .carousel-item {
+        transition: 0.3s linear;
+    }
+
+    .carousel-item:hover {
+        filter: brightness(0.8);
+    }
+
+    .carousel-control-next, .carousel-control-prev {
+        transition: 0.2s linear;
+    }
+
+    .carousel-control-next:hover, .carousel-control-prev:hover {
+        background-color: #5a5a5a5e;
     }
 }

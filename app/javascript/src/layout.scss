@@ -1,0 +1,22 @@
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1300px !important;
+    }
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+.user-icon > .dropdown-toggle {
+    width: 40px;
+    height: 40px;
+}
+
+.user-icon > .dropdown-toggle::after {
+    display: none;
+}

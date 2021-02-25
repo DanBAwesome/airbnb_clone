@@ -3,6 +3,7 @@ module Api
     def create
       @user = User.find_by(email: params[:user][:email])
 
+      puts BCrypt::Password.new(@user.password)
       if @user and BCrypt::Password.new(@user.password) == params[:user][:password]
         session = @user.sessions.create
         cookies.permanent.signed[:airbnb_session_token] = {

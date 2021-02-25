@@ -1,6 +1,7 @@
 import React from 'react';
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
+
 import { safeCredentials, handleErrors } from '@utils/fetchHelper';
 
 import 'react-dates/lib/css/_datepicker.css';
@@ -50,7 +51,6 @@ class BookingWidget extends React.Component {
         fetch(`/api/properties/${this.props.property_id}/bookings`)
             .then(handleErrors)
             .then(data => {
-                console.log(data);
                 this.setState({
                     existingBookings: data.bookings
                 })
@@ -61,8 +61,6 @@ class BookingWidget extends React.Component {
         if (e) { e.preventDefault(); }
 
         const { startDate, endDate } = this.state;
-        console.log(startDate.format('MMM DD YYYY'), endDate.format('MMM DD YYYY'));
-
 
         fetch('/api/bookings', safeCredentials({
             method: 'POST',
