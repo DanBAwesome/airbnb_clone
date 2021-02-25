@@ -1,5 +1,5 @@
 import React from 'react';
-import { handleErrors } from '@utils/fetchHelper';
+
 import { ImageList } from '@shared/imageList'
 
 class MyListings extends React.Component {
@@ -12,10 +12,7 @@ class MyListings extends React.Component {
     }
 
     componentDidMount() {
-        fetch('/api/listings/my-listings').then(handleErrors)
-            .then(data => {
-                this.setState({ properties: data.properties })
-            })
+        this.setState({ properties: this.props.properties })
     }
 
     render() {
@@ -24,17 +21,24 @@ class MyListings extends React.Component {
         return (
             <React.Fragment>
                 {
-                    properties.map((property) => {
-                        return (
-                            <ImageList key={property.id}
-                                imageUrl={property.image_url}
-                                firstLine={property.city}
-                                secondLine={property.title}
-                                isEditable={true}
-                                id={property.id} />
+                    properties.length > 0 ?
+                        properties.map((property) => {
+                            return (
+                                <ImageList key={property.id}
+                                    imageUrl={property.images[0]}
+                                    firstLine={property.city}
+                                    secondLine={property.title}
+                                    isEditable={true}
+                                    id={property.id} />
 
+                            )
+                        }) :
+                        (
+                            <div className="text-center">
+                                <div>You Are Not Currently Hosting Any Properties</div>
+                                <div><a href="/host">Click Here</a> To Create a New Listing</div>
+                            </div>
                         )
-                    })
                 }
             </React.Fragment>
         )

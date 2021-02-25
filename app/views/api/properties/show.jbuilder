@@ -10,10 +10,21 @@ json.property do
     json.bedrooms @property.bedrooms
     json.beds @property.beds
     json.baths @property.baths
-    json.image_url @property.image_url
+    json.images do
+      image_urls = []
+      @property.images.each do |image|
+        image_urls.push(url_for(image))
+      end
+      json.array! image_urls
+    end
 
     json.user do
        json.id @property.user.id
        json.username @property.user.username 
+       if @property.user.avatar.attached?
+        json.avatar url_for(@property.user.avatar)
+       else
+        json.avatar nil
+       end
     end
 end

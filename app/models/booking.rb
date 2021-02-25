@@ -15,6 +15,12 @@ class Booking < ApplicationRecord
         self.charges.pluck(:complete).include?(true)
     end
     
+    def total_price
+        property = self.property
+
+        return (self.end_date - self.start_date).to_i * property.price_per_night
+    end
+
     private
 
     def check_start_date_smaller_than_end_date

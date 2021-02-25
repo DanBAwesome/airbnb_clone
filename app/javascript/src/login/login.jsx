@@ -1,21 +1,25 @@
 import React from 'react';
+
 import Layout from '@src/layout';
 import LoginWidget from './loginWidget';
 import SignupWidget from './signupWidget';
-import { safeCredentials, handleErrors } from '@utils/fetchHelper';
+import { handleErrors } from '@utils/fetchHelper';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
 
         this.state = {
             authenticated: false,
-            show_login: props.show_login & true
+            show_login: !parseInt(urlParams.get('signup')) && (props.show_login || true)
         }
     }
 
     componentDidMount() {
-        fetch('api/authenticated')
+        fetch('/api/authenticated')
             .then(handleErrors)
             .then(data => {
                 this.setState({

@@ -20,6 +20,19 @@ module Api
             end
         end    
 
+        def show
+            token = cookies.signed[:airbnb_session_token]
+            session = Session.find_by(token: token)
+
+            return render json: { error: 'user not logged in' }, status: :unauthorized if !session
+
+            @booking = Booking.find_by(id: params[:id])
+
+            return render json: { error: 'Booking does not exist or incorrect user' }, status: :unauthorized if !@booking || session.user_id != @booking.user_id
+
+            render 'api/bookings/show'
+        end
+
         def get_property_bookings
             property = Property.find_by(id: params[:id])
             return render json: { error: 'cannot find property' }, status: :not_found if !property

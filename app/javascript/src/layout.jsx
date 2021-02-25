@@ -1,7 +1,9 @@
 import React from 'react';
-import AirbnbImage from '@img/airbnb.svg';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { safeCredentials, handleErrors } from '@utils/fetchHelper';
+
+import AirbnbImage from '@img/airbnb.svg';
+import { safeCredentials, safeCredentialsForm, handleErrors } from '@utils/fetchHelper';
+
 import './layout.scss';
 
 class Layout extends React.Component {
@@ -10,8 +12,13 @@ class Layout extends React.Component {
 
         this.state = {
             authenticated: false,
-            image_url: null
+            username: null,
+            avatar: null
         };
+
+        this.avatar = React.createRef();
+        this.selectAvatar = this.selectAvatar.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -20,13 +27,39 @@ class Layout extends React.Component {
             .then(data => {
                 this.setState({
                     authenticated: data.authenticated,
-                    image_url: data.image_url
+                    username: data.username,
+                    avatar: data.avatar
                 })
             })
     }
 
+    selectAvatar(event) {
+        let avatarForm = new FormData();
+        let avatar = event.target.files[0]
+        avatarForm.set('avatar', avatar)
+
+        fetch('/api/user/update_avatar', safeCredentialsForm({
+            method: 'PUT',
+            body: avatarForm
+        }))
+            .then(handleErrors)
+            .then(() => {
+                this.setState({ avatar: URL.createObjectURL(avatar) })
+            })
+    }
+
+    logout() {
+        fetch('/api/sessions', safeCredentials({
+            method: 'DELETE'
+        }))
+            .then(handleErrors)
+            .then(() => {
+                window.location = '/'
+            })
+    }
+
     render() {
-        const { authenticated, image_url } = this.state;
+        const { authenticated, avatar, username } = this.state;
         return (
             <React.Fragment>
                 <Navbar bg="light" expand="lg">
@@ -42,18 +75,26 @@ class Layout extends React.Component {
                             <Nav.Item>
                                 <Nav.Link href="/host">Host A Property</ Nav.Link>
                             </Nav.Item>
-                            <NavDropdown alignRight className="user-icon" title="" style={{ backgroundImage: (authenticated && image_url ) ? `url(${image_url})` : `url(https://via.placeholder.com/150)` }}>
+                            <NavDropdown alignRight
+                                className="user-icon"
+                                title=""
+                                style={{ backgroundImage: (authenticated && avatar) ? `url(${avatar})` : `url(https://via.placeholder.com/150)` }}>
                                 {
                                     authenticated ? (
                                         <React.Fragment>
+                                            <NavDropdown.Header>Welcome, {username}</NavDropdown.Header>
                                             <NavDropdown.Item href="/user/listings">Hosted Properties</NavDropdown.Item>
                                             <NavDropdown.Item href="/bookings">Booked Properties</NavDropdown.Item>
-                                            <NavDropdown.Item href="/">Logout</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item onClick={() => { this.avatar.current.click() }}>
+                                                {!avatar ? 'Add Profile Picture' : 'Change Profile Picture'}
+                                            </NavDropdown.Item>
+                                            <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
                                         </React.Fragment>
                                     )
                                         : (
                                             <React.Fragment>
-                                                <NavDropdown.Item href="/">Sign Up</NavDropdown.Item>
+                                                <NavDropdown.Item href="/login/?signup=1">Sign Up</NavDropdown.Item>
                                                 <NavDropdown.Item href="/login">Login</NavDropdown.Item>
                                             </React.Fragment>
                                         )
@@ -68,6 +109,7 @@ class Layout extends React.Component {
                         <p className="mr-3 mb-0 text-secondary">Airbnb Clone</p>
                     </div>
                 </footer>
+                {authenticated && <input ref={this.avatar} id="avatarUpload" onChange={this.selectAvatar} type="file" hidden></input>}
             </React.Fragment>
         )
     }

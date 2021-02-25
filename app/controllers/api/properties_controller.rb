@@ -33,6 +33,41 @@ module Api
             end
         end
 
+        def update
+            token = cookies.signed[:airbnb_session_token]
+            session = Session.find_by(token: token)
+            property_id = params[:id]
+
+            return render json: { error: 'user not logged in' }, status: :unauthorized if !session
+            user = session.user
+
+            begin
+                @property = Property.find_by(id: property_id)
+
+                return render json: { error: 'incorrect user' }, status: :unauthorized if @property.user_id != user.id
+
+                @property.update(property_params)
+
+                if @property.save
+                    render json: { success: true }, status: :ok
+                end
+                
+                
+            end
+        end
+
+        def listings 
+            token = cookies.signed[:airbnb_session_token]
+            session = Session.find_by(token: token)
+
+            return render json: { error: 'user not logged in' }, status: :unauthorized if !session
+            
+            @properties = Property.where('user_id == ?', session.user_id).order(created_at: :desc).page(params[:page]).per(10)
+
+            render 'api/properties/index', status: :ok
+        end
+
+
         def owned_properties
             token = cookies.signed[:airbnb_session_token]
             session = Session.find_by(token: token)
@@ -41,7 +76,7 @@ module Api
             
             @properties = Property.where('user_id == ?', session.user_id).order(created_at: :desc).page(params[:page]).per(6)
 
-            render 'api/properties/index', status: :ok
+            render 'api/properties/listings/index', status: :ok
         end
 
         def show_owned_property
@@ -60,7 +95,7 @@ module Api
         private
 
         def property_params
-            params.require(:property).permit(:image_url, :title, :description, :property_type, :city, :country, :price_per_night, :max_guests, :bedrooms, :beds, :baths)
+            params.require(:property).permit(:title, :description, :property_type, :city, :country, :price_per_night, :max_guests, :bedrooms, :beds, :baths, images: [])
         end
     end
 end

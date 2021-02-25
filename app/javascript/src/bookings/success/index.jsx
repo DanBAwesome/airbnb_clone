@@ -1,19 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Host from './host';
+import BookingSuccess from './bookingSuccess';
 
 document.addEventListener('DOMContentLoaded', () => {
     const node = document.getElementById('params');
-    const data = node.getAttribute('data-params');
-    let parsedData = null
+    const data = JSON.parse(node.getAttribute('data-params'));
 
-    if(data) {
-        parsedData = JSON.parse(data);
-    }
-    
     ReactDOM.render(
-        <Host property_id={parsedData.property_id} />,
+        <BookingSuccess booking_id={data.booking_id} />,
         document.body.appendChild(document.createElement('div'))
     )
 })

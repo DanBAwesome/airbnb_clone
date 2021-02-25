@@ -22,3 +22,5 @@ test:
 
 production:
   <<: *default
+  adapter: postgresql
+  database: airbnb_db
