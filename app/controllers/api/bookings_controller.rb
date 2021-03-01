@@ -47,7 +47,7 @@ module Api
 
             return render json: { error: 'user not logged in' }, status: :unauthorized if !session
 
-            @bookings = Booking.where('user_id == ?', session.user_id)
+            @bookings = Booking.where('user_id = ?', session.user_id)
 
             render 'api/user/bookings/index'
         end
