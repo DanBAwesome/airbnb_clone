@@ -17,14 +17,5 @@ json.properties do
           end
           json.array! image_urls
         end
-
-        json.bookings do
-            json.array! property.bookings do |booking|
-                json.username booking.user.username
-                json.start_date booking.start_date
-                json.end_date booking.end_date
-                json.total_price booking.total_price
-            end
-        end
     end
 end

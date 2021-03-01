@@ -1,22 +1,47 @@
 import React from 'react';
 
-import { ImageList } from '@shared/imageList'
+import { ImageList } from '@shared/imageList';
+import { handleErrors } from '@utils/fetchHelper';
+import { Pagination } from 'react-bootstrap';
 
 class MyListings extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            properties: []
+            properties: [],
+            current_page: 1,
+            total_pages: 0,
+            loaded: false
         };
+
+        this.changePage = this.changePage.bind(this);
     }
 
     componentDidMount() {
-        this.setState({ properties: this.props.properties })
+        this.changePage();
+    }
+
+    changePage(page = 1) {
+        this.setState({
+            current_page: page,
+            loaded: false
+        }, () => {
+            fetch(`/api/listings/my-listings?page=${page}`).then(handleErrors)
+            .then(data => {
+                this.setState(
+                    {
+                        properties: data.properties,
+                        total_pages: data.total_pages,
+                        loaded: true
+                    }
+                )
+            })
+        })
     }
 
     render() {
-        const { properties } = this.state;
+        const { properties, total_pages, current_page } = this.state;
 
         return (
             <React.Fragment>
@@ -32,7 +57,8 @@ class MyListings extends React.Component {
                                     id={property.id} />
 
                             )
-                        }) :
+                        })
+                        :
                         (
                             <div className="text-center">
                                 <div>You Are Not Currently Hosting Any Properties</div>
@@ -40,6 +66,13 @@ class MyListings extends React.Component {
                             </div>
                         )
                 }
+                <Pagination className="justify-content-center" hidden={total_pages <= 1}>
+                    {
+                        Array.from({ length: total_pages }, (_, i) => i + 1).map((page, i) => {
+                            return <Pagination.Item key={i} active={current_page === page} onClick={() => this.changePage(page)}>{page}</Pagination.Item>
+                        })
+                    }
+                </Pagination>
             </React.Fragment>
         )
     }

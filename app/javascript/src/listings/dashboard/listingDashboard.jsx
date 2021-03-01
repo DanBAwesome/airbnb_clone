@@ -9,30 +9,13 @@ import { handleErrors } from '@utils/fetchHelper';
 class ListingDashboard extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            bookings: [],
-            properties: [],
-            loaded: false
-        };
     }
 
     componentDidMount() {
-        fetch('/api/listings/my-listings').then(handleErrors)
-            .then(data => {
-                this.setState(
-                    {
-                        properties: data.properties,
-                        bookings: data.properties.filter((property) => property.bookings.length > 0),
-                        loaded: true
-                    }
-                )
-            })
+        
     }
 
     render() {
-        const { properties, loaded, bookings } = this.state;
-
         return (
             <Layout>
                 <div className="py-4 col-12">
@@ -46,7 +29,7 @@ class ListingDashboard extends React.Component {
                                     </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link disabled={bookings.length === 0} eventKey="allListings">
+                                        <Nav.Link eventKey="allListings">
                                             All Listings
                                     </Nav.Link>
                                     </Nav.Item>
@@ -55,10 +38,10 @@ class ListingDashboard extends React.Component {
                             <Col sm="9">
                                 <Tab.Content>
                                     <Tab.Pane eventKey="myListings">
-                                        <MyListings key={loaded} properties={properties} />
+                                        <MyListings />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="allListings">
-                                        <AllListings key={loaded} properties={bookings} />
+                                        <AllListings />
                                     </Tab.Pane>
                                 </Tab.Content>
                             </Col>

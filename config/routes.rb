@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :charges, only: [:create]
 
     get '/listings/my-listings' => 'properties#owned_properties'
+    get '/listings/booked-listings' => 'properties#booked_listings'
     get '/properties/:id/bookings' => 'bookings#get_property_bookings'
     get '/authenticated' => 'sessions#authenticated'
     get '/user/booked-properties' => 'bookings#get_user_bookings'

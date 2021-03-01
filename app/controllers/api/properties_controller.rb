@@ -56,17 +56,17 @@ module Api
             end
         end
 
-        def listings 
+        def booked_listings
             token = cookies.signed[:airbnb_session_token]
             session = Session.find_by(token: token)
 
             return render json: { error: 'user not logged in' }, status: :unauthorized if !session
             
-            @properties = Property.where('user_id == ?', session.user_id).order(created_at: :desc).page(params[:page]).per(10)
+            @properties = Property.where('properties.user_id == ?', session.user_id).joins(:bookings).order(created_at: :desc).page(params[:page]).per(6)
+            return render json: { error: 'not found' }, status: :not_found if !@properties
 
-            render 'api/properties/index', status: :ok
+            render 'api/properties/listings/list', status: :ok
         end
-
 
         def owned_properties
             token = cookies.signed[:airbnb_session_token]
@@ -75,6 +75,7 @@ module Api
             return render json: { error: 'user not logged in' }, status: :unauthorized if !session
             
             @properties = Property.where('user_id == ?', session.user_id).order(created_at: :desc).page(params[:page]).per(6)
+            return render json: { error: 'not found' }, status: :not_found if !@properties
 
             render 'api/properties/listings/index', status: :ok
         end
