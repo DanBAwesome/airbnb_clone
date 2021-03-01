@@ -33,7 +33,9 @@ gem 'stripe'
 gem 'kaminari'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
+gem 'aws-sdk-s3', '~> 1.75'
 
+gem 'aws-sdk', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
