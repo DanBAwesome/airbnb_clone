@@ -66,7 +66,7 @@ class AllListings extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {properties.map((property) => {
+                        {properties.length > 0 ? properties.map((property) => {
                             return property.bookings.map((booking, i) => {
                                 return (
                                     <tr key={i}>
@@ -91,7 +91,11 @@ class AllListings extends React.Component {
                                     </tr>
                                 )
                             })
-                        })}
+                        }): (
+                            <tr>
+                                <td className="text-center" colSpan="6">Nobody has currently booked any of your properties</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
                 <Pagination className="justify-content-center" hidden={total_pages <= 1}>

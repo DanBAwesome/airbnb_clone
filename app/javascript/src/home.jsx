@@ -55,7 +55,7 @@ class Home extends React.Component {
             Explore some of the best places in the world
           </p>
           <div className="row">
-            {properties.map(property => {
+            {properties.length > 0 ? properties.map(property => {
               return (
                 <div key={property.id} className="col-6 col-lg-4 property mb-4">
                   <Carousel indicators={property.images.length > 1}
@@ -76,9 +76,10 @@ class Home extends React.Component {
                   </a>
                 </div>
               )
-            })}
+            }) :
+              (<h6 hidden={loading} className="mx-auto">There are no properties available</h6>)}
           </div>
-          {loading && <p>loading...</p>}
+          {loading && <p className="text-center">loading...</p>}
           {(loading || next_page === null) ||
             <div className="text-center">
               <button className="btn btn-light mb-4"

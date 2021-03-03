@@ -72,7 +72,7 @@ class Layout extends React.Component {
                             <Nav.Item>
                                 <Nav.Link href="/">Properties</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item>
+                            <Nav.Item hidden={!authenticated}>
                                 <Nav.Link href="/host">Host A Property</ Nav.Link>
                             </Nav.Item>
                             <NavDropdown alignRight

@@ -51,8 +51,8 @@ module Api
                 if @property.save
                     render json: { success: true }, status: :ok
                 end
-                
-                
+            rescue ArgumentError => e 
+                render json: { error: e.message }, status: :bad_request    
             end
         end
 

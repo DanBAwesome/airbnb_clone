@@ -22,9 +22,9 @@ module Api
         user.avatar.purge_later
       end
 
-      if user.avatar.attach(params[:avatar]) 
-        render json: { success: true }, status: :ok 
-      end
+      user.avatar.attach(params[:avatar])
+
+      render json: { success: true }, status: :ok if user.avatar.attached?
     end
 
     private
