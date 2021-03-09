@@ -57,7 +57,7 @@ class Home extends React.Component {
           <div className="row">
             {properties.length > 0 ? properties.map(property => {
               return (
-                <div key={property.id} className="col-6 col-lg-4 property mb-4">
+                <div key={property.id} className="col-sm-6 col-xs-12 col-lg-4 property mb-4">
                   <Carousel indicators={property.images.length > 1}
                     controls={property.images.length > 1}>
                     {

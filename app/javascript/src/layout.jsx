@@ -6,6 +6,7 @@ import { safeCredentials, safeCredentialsForm, handleErrors } from '@utils/fetch
 
 import './layout.scss';
 
+const isMobile = window.innerWidth < 769;
 class Layout extends React.Component {
     constructor(props) {
         super(props);
@@ -22,6 +23,7 @@ class Layout extends React.Component {
     }
 
     componentDidMount() {
+        console.log(isMobile)
         fetch('/api/authenticated')
             .then(handleErrors)
             .then(data => {
@@ -75,8 +77,34 @@ class Layout extends React.Component {
                             <Nav.Item hidden={!authenticated}>
                                 <Nav.Link href="/host">Host A Property</ Nav.Link>
                             </Nav.Item>
+                            {
+                                isMobile && (authenticated ? (
+                                    <React.Fragment>
+                                        <Nav.Item className="pt-1">
+                                            <Nav.Link href="/user/listings">Hosted Properties</ Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link href="/bookings">Booked Properties</ Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link onClick={this.logout}>Logout</ Nav.Link>
+                                        </Nav.Item>
+                                    </React.Fragment>
+                                ) : 
+                                (
+                                    <React.Fragment>
+                                        <Nav.Item>
+                                            <Nav.Link href="/login/?signup=1">Sign Up</ Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link href="/login">Login</ Nav.Link>
+                                        </Nav.Item>
+                                    </React.Fragment>
+                                )) 
+                            }
                             <NavDropdown alignRight
                                 className="user-icon"
+                                hidden={isMobile}
                                 title=""
                                 style={{ backgroundImage: (authenticated && avatar) ? `url(${avatar})` : `url(https://via.placeholder.com/150)` }}>
                                 {

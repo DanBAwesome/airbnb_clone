@@ -59,10 +59,10 @@ class Host extends React.Component {
         const { property, addedImages } = this.state;
         let propertyForm = new FormData();
 
-        for(var i = 0; i < addedImages.length; i++) {
+        for (var i = 0; i < addedImages.length; i++) {
             propertyForm.append('property[images][]', addedImages[i]);
         }
-      
+
 
         propertyForm.set('property[title]', property.title);
         propertyForm.set('property[description]', property.description);
@@ -127,11 +127,15 @@ class Host extends React.Component {
         } = property;
         return (
             <Layout>
-                <Alert id="saveAlert" show={alertVisible} dismissible variant="success">Successfully {property_id ? "Saved" : "Created"} Property</Alert>
+                <Alert id="saveAlert"
+                    show={alertVisible}
+                    dismissible
+                    variant="success"
+                    style={{zIndex: 1000}}>Successfully {property_id ? "Saved" : "Created"} Property</Alert>
                 <div className="container py-4">
                     <div className="col-12 justify-content-start">
                         <div className="row justify-content-between">
-                            <Card className="col-5 align-self-start">
+                            <Card className="col-md-5 mb-3 col-xs-12 align-self-start">
                                 <Card.Body>
                                     <input onChange={this.imageSelect}
                                         hidden
@@ -159,7 +163,7 @@ class Host extends React.Component {
                                     </div>
                                 </Card.Body>
                             </Card>
-                            <Card className="col-6 py-3 px-4 align-self-start">
+                            <Card className="col-md-6 col-12 py-3 px-4 align-self-start">
                                 <Form onSubmit={this.createProperty} name="PropertyForm">
                                     <Form.Group>
                                         <Form.Label>Property Name</Form.Label>

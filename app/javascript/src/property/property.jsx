@@ -32,7 +32,7 @@ const ImageModal = (props) => {
 
     return (
         <Modal show={show} onHide={onHide} dialogClassName="position-absolute modal-large" contentClassName="content-large">
-            <Modal.Header><button className="btn btn-secondary" onClick={() => {onHide()}}>Close</button></Modal.Header>
+            <Modal.Header><button className="btn btn-secondary" onClick={() => { onHide() }}>Close</button></Modal.Header>
             <Modal.Body>
                 <div className="d-flex align-items-center justify-content-between h-100">
                     <div>
@@ -86,7 +86,7 @@ class Property extends React.Component {
         let modal = this.state.modal;
         modal.modalShow = !this.state.modal.modalShow;
 
-        if(index !== undefined){
+        if (index !== undefined) {
             modal.modalIndex = index;
         }
         this.setState({
@@ -118,7 +118,14 @@ class Property extends React.Component {
 
         return (
             <Layout>
-                {/* <div className="property-image mb-3" style={{ backgroundImage: `url(${image})` }} /> */}
+                <div className="property-header-img">
+                    <div className="d-md-none"
+                        onClick={() => { this.modalDisplay() }}
+                        style={{ backgroundImage: `url(${images[0]})` }}></div>
+                    <div className="btn btn-light" onClick={() => { this.modalDisplay() }}>
+                        View All Images
+                    </div>
+                </div>
                 <div className="container mt-3">
                     <div className="row">
                         <div className="info col-12">
