@@ -36,7 +36,8 @@ const ImageModal = (props) => {
             <Modal.Body>
                 <div className="d-flex align-items-center justify-content-between h-100">
                     <div>
-                        <button className="btn btn-primary" onClick={() => { changeImage(images.length, -1) }}></button>
+                        <button className="btn btn-primary rounded-circle carousel-control"
+                            onClick={() => { changeImage(images.length, -1) }}></button>
                     </div>
                     <Carousel controls={false} fade={true} activeIndex={index ? index : 0}>
                         {
@@ -50,7 +51,8 @@ const ImageModal = (props) => {
                         }
                     </Carousel>
                     <div>
-                        <button className="btn btn-primary" onClick={() => { changeImage(images.length) }}></button>
+                        <button className="btn btn-primary rounded-circle carousel-control"
+                            onClick={() => { changeImage(images.length) }}></button>
                     </div>
                 </div>
             </Modal.Body>
@@ -118,9 +120,8 @@ class Property extends React.Component {
 
         return (
             <Layout>
-                <div className="property-header-img">
-                    <div className="d-md-none"
-                        onClick={() => { this.modalDisplay() }}
+                <div className="property-header-img d-md-none">
+                    <div onClick={() => { this.modalDisplay() }}
                         style={{ backgroundImage: `url(${images[0]})` }}></div>
                     <div className="btn btn-light" onClick={() => { this.modalDisplay() }}>
                         View All Images
@@ -146,7 +147,7 @@ class Property extends React.Component {
                                                 <div key={i}
                                                     className="property-image"
                                                     onClick={() => { this.modalDisplay(i) }}
-                                                    style={{ backgroundImage: `url(${images[i]})` }}>
+                                                    style={{ backgroundImage: `url(${images[i]})`, cursor: 'pointer' }}>
                                                 </div>
                                             ) :
                                             (
@@ -158,6 +159,9 @@ class Property extends React.Component {
 
                                     })
                                 }
+                                <div className="btn btn-light" onClick={() => { this.modalDisplay() }}>
+                                    View All Images
+                                </div>
                             </div>
 
                             <div className="row">

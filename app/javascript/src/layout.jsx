@@ -23,7 +23,6 @@ class Layout extends React.Component {
     }
 
     componentDidMount() {
-        console.log(isMobile)
         fetch('/api/authenticated')
             .then(handleErrors)
             .then(data => {
