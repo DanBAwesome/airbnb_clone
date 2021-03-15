@@ -37,7 +37,7 @@ const ImageModal = (props) => {
                 <div className="d-flex align-items-center justify-content-between h-100">
                     <div>
                         <button className="btn btn-primary rounded-circle carousel-control"
-                            onClick={() => { changeImage(images.length, -1) }}></button>
+                            onClick={() => { changeImage(images.length, -1) }}>&#60;</button>
                     </div>
                     <Carousel controls={false} fade={true} activeIndex={index ? index : 0}>
                         {
@@ -52,7 +52,7 @@ const ImageModal = (props) => {
                     </Carousel>
                     <div>
                         <button className="btn btn-primary rounded-circle carousel-control"
-                            onClick={() => { changeImage(images.length) }}></button>
+                            onClick={() => { changeImage(images.length) }}>&#62;</button>
                     </div>
                 </div>
             </Modal.Body>

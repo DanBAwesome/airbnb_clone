@@ -33,7 +33,7 @@ class Booking < ApplicationRecord
         overlapped_bookings = self.property.bookings.where("start_date < ? AND end_date > ? ",
         self.end_date, self.start_date)
 
-        exact_booking = self.property.bookings.where("start_date == ? AND end_date == ?",
+        exact_booking = self.property.bookings.where("start_date = ? AND end_date = ?",
         self.start_date, self.end_date)
 
         if overlapped_bookings.count > 0 || exact_booking.count > 0
