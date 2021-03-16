@@ -13,7 +13,7 @@ const Booking = (props) => {
         <React.Fragment>
             <div className="container booking">
                 <div className="row align-items-center mb-5">
-                    <div className="booking-img" style={booking.image && { backgroundImage: `url(${booking.image})` }}></div>
+                    <div className="booking-img" style={booking.images[0] && { backgroundImage: `url(${booking.images[0]})` }}></div>
                     <div className="pl-3">
                         <div className="location text-uppercase">{booking.property_city}</div>
                         <div className="title font-weight-bold">{booking.property_title}</div>

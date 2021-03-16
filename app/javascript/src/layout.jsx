@@ -105,7 +105,7 @@ class Layout extends React.Component {
                                 className="user-icon"
                                 hidden={isMobile}
                                 title=""
-                                style={{ backgroundImage: (authenticated && avatar) ? `url(${avatar})` : `url(https://via.placeholder.com/150)` }}>
+                                style={{ backgroundImage: avatar && `url(${avatar})`}}>
                                 {
                                     authenticated ? (
                                         <React.Fragment>
