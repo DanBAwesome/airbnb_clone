@@ -26,6 +26,7 @@ class AllListings extends React.Component {
         }, () => {
             fetch(`/api/listings/booked-listings?page=${page}`).then(handleErrors)
                 .then(data => {
+                    console.log(data)
                     this.setState(
                         {
                             properties: data.properties,
@@ -66,32 +67,30 @@ class AllListings extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {properties.length > 0 ? properties.map((property) => {
-                            return property.bookings.map((booking, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>
-                                            <a href={`/host/${property.id}`}>{property.title}</a>
-                                        </td>
-                                        <td>
-                                            {property.city}, {property.country.toUpperCase()}
-                                        </td>
-                                        <td>
-                                            ${booking.total_price}
-                                        </td>
-                                        <td>
-                                            {booking.username}
-                                        </td>
-                                        <td>
-                                            {booking.start_date}
-                                        </td>
-                                        <td>
-                                            {booking.end_date}
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }): (
+                        {properties.length > 0 ? properties.map((property, i) => {
+                            return (
+                                <tr key={i}>
+                                    <td>
+                                        <a href={`/host/${property.id}`}>{property.title}</a>
+                                    </td>
+                                    <td>
+                                        {property.city}, {property.country.toUpperCase()}
+                                    </td>
+                                    <td>
+                                        ${property.total_price}
+                                    </td>
+                                    <td>
+                                        {property.username}
+                                    </td>
+                                    <td>
+                                        {property.start_date}
+                                    </td>
+                                    <td>
+                                        {property.end_date}
+                                    </td>
+                                </tr>
+                            )
+                        }) : (
                             <tr>
                                 <td className="text-center" colSpan="6">Nobody has currently booked any of your properties</td>
                             </tr>

@@ -25,16 +25,20 @@
 }
 
 #addPropertyImage {
+    display: flex;
     position: relative;
     height: 100px;
     width: 140px;
     text-align: center;
-    font-size: 10em;
-    font-weight: lighter;
     color: #2bb1ff;
-    line-height: 0.4em;
-    margin-bottom: 0;
     border: 1px dashed;
+}
+
+
+#addPropertyImage > img {
+    font-size: 4em;
+    line-height: 0;
+    font-weight: 300;
 }
 
 #addPropertyImage:hover {

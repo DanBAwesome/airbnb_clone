@@ -4,6 +4,9 @@ import { Card, Form, InputGroup, Col, Button, Alert } from 'react-bootstrap';
 import { handleErrors, safeCredentialsForm } from '@utils/fetchHelper';
 import { countries } from '@utils/countries';
 import Layout from '../../layout';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import Plus from '@img/plus.svg';
 
 import './host.scss';
 
@@ -131,7 +134,7 @@ class Host extends React.Component {
                     show={alertVisible}
                     dismissible
                     variant="success"
-                    style={{zIndex: 1000}}>Successfully {property_id ? "Saved" : "Created"} Property</Alert>
+                    style={{ zIndex: 1000 }}>Successfully {property_id ? "Saved" : "Created"} Property</Alert>
                 <div className="container py-4">
                     <div className="col-12 justify-content-start">
                         <div className="row justify-content-between">
@@ -154,7 +157,9 @@ class Host extends React.Component {
                                         {
                                             imagePreviews.length > 0 ?
                                                 <label htmlFor="imageUpload"
-                                                    id="addPropertyImage">+</label>
+                                                    id="addPropertyImage">
+                                                    <img className="m-auto w-50" src={Plus} />
+                                                </label>
                                                 :
                                                 <label className="btn btn-primary w-100"
                                                     htmlFor="imageUpload">Add Images</label>

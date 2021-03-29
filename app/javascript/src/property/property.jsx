@@ -5,8 +5,10 @@ import BookingWidget from './bookingWidget';
 import { getCountryNameByCode } from '@utils/countries';
 import { handleErrors } from '@utils/fetchHelper';
 import Layout from '../layout';
+import { CarouselProvider, Slider, Slide, ButtonNext, ButtonBack, Image } from 'pure-react-carousel';
 
 import './property.scss';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const ImageModal = (props) => {
     const { show, images, onHide, currentImageIndex } = props;
@@ -34,7 +36,7 @@ const ImageModal = (props) => {
         <Modal show={show} onHide={onHide} dialogClassName="position-absolute modal-large" contentClassName="content-large">
             <Modal.Header><button className="btn btn-secondary" onClick={() => { onHide() }}>Close</button></Modal.Header>
             <Modal.Body>
-                <div className="d-flex align-items-center justify-content-between h-100">
+                {/* <div className="d-flex align-items-center justify-content-between h-100">
                     <div>
                         <button className="btn btn-primary rounded-circle carousel-control"
                             onClick={() => { changeImage(images.length, -1) }}>&#60;</button>
@@ -54,7 +56,33 @@ const ImageModal = (props) => {
                         <button className="btn btn-primary rounded-circle carousel-control"
                             onClick={() => { changeImage(images.length) }}>&#62;</button>
                     </div>
-                </div>
+                </div> */}
+                <CarouselProvider
+                    className="d-flex align-items-center justify-content-between h-100"
+                    naturalSlideHeight={50}
+                    naturalSlideWidth={50}
+                    isIntrinsicHeight={true}
+                    currentSlide={index ? index : 0}
+                    hasMasterSpinner={true}
+                    totalSlides={images.length}>
+                    <ButtonBack
+                        className="btn btn-light rounded-circle carousel-control d-none d-md-block">
+                        <span>&lang;</span>
+                    </ButtonBack>
+                    <Slider classNameTray="align-items-center">
+                        {
+                            images && images.map((image, i) => {
+                                return (
+                                    <Slide key={i} index={i}><Image className="property-image-modal mx-auto" src={image} /></Slide>
+                                )
+                            })
+                        }
+                    </Slider>
+                    <ButtonNext
+                        className="btn btn-light rounded-circle carousel-control d-none d-md-block">
+                        <span>&rang;</span>
+                    </ButtonNext>
+                </CarouselProvider>
             </Modal.Body>
         </Modal>
     )
@@ -159,7 +187,7 @@ class Property extends React.Component {
 
                                     })
                                 }
-                                <div className="btn btn-light" onClick={() => { this.modalDisplay() }}>
+                                <div className="btn btn-light" hidden={images.length === 0} onClick={() => { this.modalDisplay() }}>
                                     View All Images
                                 </div>
                             </div>

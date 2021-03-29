@@ -62,8 +62,9 @@ module Api
 
             return render json: { error: 'user not logged in' }, status: :unauthorized if !session
             
-            @properties = Property.where('properties.user_id = ?', session.user_id).joins(:bookings).order(created_at: :desc).page(params[:page]).per(6)
-            return render json: { error: 'not found' }, status: :not_found if !@properties
+            @bookings = Booking.joins(:property).where('properties.user_id = ?', session.user_id).order(created_at: :desc).page(params[:page]).per(6)
+            
+            return render json: { error: 'not found' }, status: :not_found if !@bookings
 
             render 'api/properties/listings/list', status: :ok
         end

@@ -56,13 +56,27 @@
 }
 
 .property-image-modal {
+    width: auto !important;
+    height: auto !important;
     max-height: 70vh;
     max-width: 100%;
 }
 
 .carousel-control {
-    width: 26px;
-    height: 26px;
+    width: 50px;
+    height: 50px;
+    display: inline-block !important;
+}
+
+.carousel-control > span {
+    font-size: xx-large;
+    line-height: 0;
+    font-weight: bolder;
+    vertical-align: sub;
+}
+
+.carousel-control:disabled {
+    visibility: hidden;
 }
 
 @media(max-width: 767px) {
