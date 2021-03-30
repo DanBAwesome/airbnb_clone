@@ -22,7 +22,7 @@ class ListingDashboard extends React.Component {
                     <Tab.Container defaultActiveKey="myListings">
                         <Row>
                             <Col sm="3">
-                                <Nav variant="pills" className="flex-column">
+                                <Nav variant="pills" className="flex-column mb-5 mb-md-0">
                                     <Nav.Item>
                                         <Nav.Link eventKey="myListings">
                                             My Listings
@@ -40,7 +40,7 @@ class ListingDashboard extends React.Component {
                                     <Tab.Pane eventKey="myListings">
                                         <MyListings />
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey="allListings">
+                                    <Tab.Pane style={{maxWidth: "100%", overflow: "scroll"}} eventKey="allListings">
                                         <AllListings />
                                     </Tab.Pane>
                                 </Tab.Content>

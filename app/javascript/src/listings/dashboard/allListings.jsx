@@ -40,7 +40,6 @@ class AllListings extends React.Component {
 
     render() {
         const { properties, total_pages, current_page } = this.state;
-        const { bookings } = properties;
         return (
             <React.Fragment>
                 <table className="table table-bordered">
