@@ -14,75 +14,60 @@ const ImageModal = (props) => {
     const { show, images, onHide, currentImageIndex } = props;
 
     const [index, setIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         setIndex(currentImageIndex);
+        setCurrentIndex(currentImageIndex);
     }, [currentImageIndex])
 
-    function changeImage(imageCount, increase = 1) {
-        let nextIndex = index + increase;
-
-        if (nextIndex > (imageCount - 1)) {
-            nextIndex = 0
-        }
-        if (nextIndex < 0) {
-            nextIndex = (imageCount - 1)
-        }
-
-        setIndex(nextIndex)
+    function changeSlide(index, direction = 1) {
+        setCurrentIndex(index + direction)
+        console.log(index)
     }
 
     return (
-        <Modal show={show} onHide={onHide} dialogClassName="position-absolute modal-large" contentClassName="content-large">
-            <Modal.Header><button className="btn btn-secondary" onClick={() => { onHide() }}>Close</button></Modal.Header>
+        <Modal show={show}
+            onHide={onHide}
+            dialogClassName="position-absolute modal-large"
+            contentClassName="content-large">
+
             <Modal.Body>
-                {/* <div className="d-flex align-items-center justify-content-between h-100">
-                    <div>
-                        <button className="btn btn-primary rounded-circle carousel-control"
-                            onClick={() => { changeImage(images.length, -1) }}>&#60;</button>
+                <div className="h-100 d-flex flex-column">
+                    <div className="d-flex">
+                        <button className="btn btn-secondary"
+                            onClick={() => { onHide() }}>Close</button>
+                        <span className="m-auto">Image {currentIndex + 1} of {images.length}</span>
                     </div>
-                    <Carousel controls={false} fade={true} activeIndex={index ? index : 0}>
-                        {
-                            images && images.map((image, i) => {
-                                return (
-                                    <Carousel.Item key={i}>
-                                        <img src={image} className="property-image-modal" />
-                                    </Carousel.Item>
-                                )
-                            })
-                        }
-                    </Carousel>
-                    <div>
-                        <button className="btn btn-primary rounded-circle carousel-control"
-                            onClick={() => { changeImage(images.length) }}>&#62;</button>
-                    </div>
-                </div> */}
-                <CarouselProvider
-                    className="d-flex align-items-center justify-content-between h-100"
-                    naturalSlideHeight={50}
-                    naturalSlideWidth={50}
-                    isIntrinsicHeight={true}
-                    currentSlide={index ? index : 0}
-                    hasMasterSpinner={true}
-                    totalSlides={images.length}>
-                    <ButtonBack
-                        className="btn btn-light rounded-circle carousel-control d-none d-md-block">
-                        <span>&lang;</span>
-                    </ButtonBack>
-                    <Slider classNameTray="align-items-center">
-                        {
-                            images && images.map((image, i) => {
-                                return (
-                                    <Slide key={i} index={i}><Image className="property-image-modal mx-auto" src={image} /></Slide>
-                                )
-                            })
-                        }
-                    </Slider>
-                    <ButtonNext
-                        className="btn btn-light rounded-circle carousel-control d-none d-md-block">
-                        <span>&rang;</span>
-                    </ButtonNext>
-                </CarouselProvider>
+                    <CarouselProvider
+                        className="d-flex align-items-center justify-content-between h-100"
+                        naturalSlideHeight={50}
+                        naturalSlideWidth={50}
+                        isIntrinsicHeight={true}
+                        currentSlide={index ? index : 0}
+                        hasMasterSpinner={true}
+                        totalSlides={images.length}>
+                        <ButtonBack
+                            onClick={() => { changeSlide(currentIndex, -1) }}
+                            className="btn btn-light rounded-circle carousel-control d-none d-md-block">
+                            <span>&lang;</span>
+                        </ButtonBack>
+                        <Slider classNameTray="align-items-center">
+                            {
+                                images && images.map((image, i) => {
+                                    return (
+                                        <Slide id={`Slide${i}`} key={i} index={i}><Image className="property-image-modal mx-auto slide" src={image} /></Slide>
+                                    )
+                                })
+                            }
+                        </Slider>
+                        <ButtonNext
+                            onClick={() => { changeSlide(currentIndex) }}
+                            className="btn btn-light rounded-circle carousel-control d-none d-md-block">
+                            <span>&rang;</span>
+                        </ButtonNext>
+                    </CarouselProvider>
+                </div>
             </Modal.Body>
         </Modal>
     )
