@@ -64,6 +64,9 @@ class BookingSuccess extends React.Component {
                         </div>
                     </Card.Body>
                 </Card>
+                <div className="text-center mt-3 mb-4">
+                    <a className="btn btn-primary" href="/">Return To Homepage</a>
+                </div>
             </div>
         )
     }
