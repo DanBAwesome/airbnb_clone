@@ -12,20 +12,20 @@ const Booking = (props) => {
     return (
         <React.Fragment>
             <div className="container booking">
-                <div className="row align-items-center mb-5">
+                <div className="d-flex flex-column flex-md-row align-items-md-center mb-3 mb-md-5">
                     <div className="booking-img" style={booking.images[0] && { backgroundImage: `url(${booking.images[0]})` }}></div>
-                    <div className="pl-3">
+                    <div className="pl-md-3">
                         <div className="location text-uppercase">{booking.property_city}</div>
                         <div className="title font-weight-bold">{booking.property_title}</div>
                         <div className="date">Booked From {booking.start_date} to {booking.end_date}</div>
                         <div className="font-weight-bold">Total: ${booking.total_price}</div>
                     </div>
-                    <div className="ml-auto">
+                    <div className="status">
                         Status: {chargeComplete ? "Complete" : "Incomplete"}
                     </div>
                 </div>
                 <div hidden={chargeComplete} className="row justify-content-center">
-                    <Button className="mx-3 w-25" onClick={() => completeBooking(booking.id)}>Complete Booking</Button>
+                    <Button className="mx-3" onClick={() => completeBooking(booking.id)}>Complete Booking</Button>
                 </div>
             </div>
             <hr className="px-0" />
@@ -74,7 +74,7 @@ class Bookings extends React.Component {
 
         return (
             <Layout>
-                <div className="container pt-4">
+                <div className="container pt-4 mb-4">
                     <h4>Bookings</h4>
                 </div>
                 {
